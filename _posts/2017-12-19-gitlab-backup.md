@@ -28,7 +28,7 @@ categories: git
 
 编辑`/etc/gitlab/gitlab.rb`文件，添加如下内容：
 
-```ruby
+{% highlight ruby %}
 gitlab_rails['backup_upload_connection'] = {
   :provider => 'Local',
   :local_root => '/mnt/backups'
@@ -37,21 +37,21 @@ gitlab_rails['backup_upload_connection'] = {
 # The directory inside the mounted folder to copy backups to
 # Use '.' to store them in the root directory
 gitlab_rails['backup_upload_remote_directory'] = 'gitlab_backups'
-```
+{% endhighlight %}
 
 gitlab生成的备份文件访问权限为owner/group是git:git并且访问权限是0600，如果想要修改生成备份文件的访问权限，就添加以下内容：
 
-```ruby
+{% highlight ruby %}
 # In /etc/gitlab/gitlab.rb, for omnibus packages
 gitlab_rails['backup_archive_permissions'] = 0644 # Makes the backup archives world-readable
-```
+{% endhighlight %}
 
 如果想要让gitlab自动清理旧的备份，添加如下内容：
 
-```ruby
+{% highlight ruby %}
 # limit backup lifetime to 7 days - 604800 seconds
 gitlab_rails['backup_keep_time'] = 604800
-```
+{% endhighlight %}
 
 编辑完成后执行`gitlab-ctl reconfigure`让配置生效。
 
