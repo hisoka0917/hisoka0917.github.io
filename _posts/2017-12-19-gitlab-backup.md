@@ -3,7 +3,9 @@ layout: post
 title:  "gitlab自动备份"
 date:   2017-12-19 16:50:11 +0800
 categories: git
+tags: git
 ---
+
 #gitlab 自动备份
 
 近日由于需要做了一下gitlab的自动备份。总的方法是挂载一个共享目录，将gitlab的备份目录改到该共享目录，并使用crontab来实现每日自动备份。
