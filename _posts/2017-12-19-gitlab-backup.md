@@ -1,16 +1,14 @@
 ---
 layout: post
-title:  "gitlab自动备份"
+title:  "Gitlab自动备份"
 date:   2017-12-19 16:50:11 +0800
 categories: git
 tags: git
 ---
 
-#gitlab 自动备份
-
 近日由于需要做了一下gitlab的自动备份。总的方法是挂载一个共享目录，将gitlab的备份目录改到该共享目录，并使用crontab来实现每日自动备份。
 
-#### 挂载共享目录
+## 挂载共享目录
 
 目前的情况是这样的，服务器是在一台Windows Server上，用Hyper-V创建的Linux虚拟机，gitlab搭建在虚拟机里。Windows Server上有一块硬盘作为NAS。我的想法是在NAS上创建一个共享目录，然后把这个目录挂载到Linux上。gitlab支持NFS/CIFS/SMB等协议的共享目录备份。
 首先在Windows上设置好共享目录，然后分配好用户和访问权限。然后到Linux里面编辑`/etc/fstab`文件，添加以下一行：
@@ -26,7 +24,7 @@ tags: git
 
 保存以后运行`mount -a`挂载目录。写在`/etc/fstab`里的好处是每次开机重启后会自动挂载。
 
-#### 修改gitlab备份路径
+## 修改gitlab备份路径
 
 编辑`/etc/gitlab/gitlab.rb`文件，添加如下内容：
 
@@ -57,13 +55,16 @@ gitlab_rails['backup_keep_time'] = 604800
 
 编辑完成后执行`gitlab-ctl reconfigure`让配置生效。
 
-#### 使用crontab执行每日自动备份
+## 使用crontab执行每日自动备份
 
 执行`sudo crontab -e -u root`编辑crontab。
 
-    0 3 * * 2-6  umask 0077; tar cfz /mnt/backups/gitlab-backups/$(date "+etc-gitlab-\%s.tgz") -C / etc/gitlab
+    0 3 * * 2-6  umask 0077; tar cfz /home/backups/gitlab-backups/$(date "+etc-gitlab-\%s.tgz") -C / etc/gitlab
     0 4 * * * /opt/gitlab/bin/gitlab-rake gitlab:backup:create CRON=1
 
 第一行是说在每周2到周6的3点钟备份`/etc/gitlab`目录。该目录下存放着gitlab的配置文件，用户的二次验证信息等。gitlab官方推荐备份整个文件夹。
+
 第二行意思是在每天4点使用gitlab本身的备份命令备份整个应用。`CRON=1`表示如果没有错误就不输出进度，这样会减少cron的垃圾信息，推荐加上该参数。
+
+**注意：我们挂载了共享文件夹到`/mnt/backups/`路径下，上述crontab的tar命令往这个路径上创建压缩文件会失败。所以要找另外一个路径来备份。**
 

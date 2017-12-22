@@ -6,6 +6,8 @@ categories: swift
 tags: swift
 ---
 
+本文将讨论一下在Swift中，closure中引用self时的循环引用问题，以及unowned和weak的用法。
+
 关于iOS内存管理中经典的循环引用问题在这篇文章中就不再描述，可以参考onevcat的这篇文章:[《内存管理，weak 和 unowned》
 ](http://swifter.tips/retain-cycle/)
 
@@ -62,8 +64,8 @@ class ApiManager: NSObject {
 在这里模拟了异步获取数据并返回的情况。在界面上按下Button调用`getData()`，该函数中会异步获取数据，并做一些操作。在调用`ApiManager`之后直接pop自己，也就是说当异步调用数据返回的时候这个vc已经被释放了。此时会发生什么呢？在模拟器上运行这段代码，界面返回后并没有发生什么，看上去一切正常。但是控制台打出了一行字`Warning: Attempt to present <UIAlertController: 0x7fb1b204da00> on <MVVMExample.SecondViewController: 0x7fb1b0623e40> whose view is not in the window hierarchy!`
 并且没有出现`deinit`字样。我们来分析一下，控制台打出这段warning说明`self.present()`被执行了，而没有`deinit`说明vc没有被释放。为了验证这一点，我们使用Instruments里的Leak工具来查看这里是否有内存泄漏。结果显示这个地方果然有内存泄漏。
 
-![leak1]({{ site.url }}/assets/img/posts/closure-unowned-weak-self/leak1.png)
-![leak2]({{ site.url }}/assets/img/posts/closure-unowned-weak-self/leak2.png)
+![leak1]({{ site.url }}/assets/images/posts/closure-unowned-weak-self/leak1.png)
+![leak2]({{ site.url }}/assets/images/posts/closure-unowned-weak-self/leak2.png)
 
 由于我们这里是用的`self.present()`这种对view hierarchy的操作导致了内存泄漏，那么如果是一些比较轻的操作呢？
 
