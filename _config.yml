@@ -430,10 +430,10 @@ changyan:
 
 # Google Webmaster tools verification setting
 # See: https://www.google.com/webmasters/
-#google_site_verification:
+google_site_verification: ZUXvlmgZ1447fM7TlcF0b0EGlJZ-MIcpXqOJhHQBEUQ
 
 # Google Analytics
-#google_analytics:
+google_analytics: UA-111529553-1
 
 # Yandex Webmaster tools verification setting
 # See: https://webmaster.yandex.ru/
