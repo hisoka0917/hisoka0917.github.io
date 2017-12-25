@@ -68,3 +68,7 @@ gitlab_rails['backup_keep_time'] = 604800
 
 **注意：我们挂载了共享文件夹到`/mnt/backups/`路径下，上述crontab的tar命令往这个路径上创建压缩文件会失败。所以要找另外一个路径来备份。**
 
+## 备份过程
+
+在`gitlab.rb`文件中有`"backup_path"`和`"backup_upload_connection"`两个路径。执行备份的时候是先在backup_path目录下生成备份，然后上传到backup_upload_connection，两个目录下都会有备份文件。所以请注意磁盘空间。
+
