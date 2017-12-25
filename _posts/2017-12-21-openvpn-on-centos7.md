@@ -94,18 +94,18 @@ tags: linux
 
 	A challenge password []: ChooseASafePassword123
 
-###生成Diffie Hellman交换文件
+### 生成Diffie Hellman交换文件
 
 键入以下命令生成.pem文件
 
 	./build-dh
 
-###拷贝证书和密钥
+### 拷贝证书和密钥
 
 	cd /etc/openvpn/easy-rsa/2.0/keys
 	cp dh2048.pem ca.crt server.crt server.key /etc/openvpn
 
-###生成OpenVPN配置文件
+### 生成OpenVPN配置文件
 
 拷贝一个示例配置文件
 
@@ -194,7 +194,7 @@ tags: linux
     # firewall-cmd --query-masquerade
     yes
 
-###启动VPN服务
+### 启动VPN服务
 
 把OpenVPN添加到服务并设置开机启动
 

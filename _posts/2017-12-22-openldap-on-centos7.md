@@ -3,7 +3,10 @@ layout: post
 title:  在CentOS 7上安装与配置OpenLDAP服务
 date:   2017-12-22 10:44:11 +0800
 categories: linux
-tags: linux
+tags: 
+- linux
+- centos
+- openldap
 ---
 LDAP通常用来做统一认证，公司的内网使用OpenLDAP来实现这一功能。在此记录一下安装配置OpenLDAP的过程。
     
