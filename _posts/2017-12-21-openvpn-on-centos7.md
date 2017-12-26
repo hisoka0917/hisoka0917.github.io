@@ -3,7 +3,7 @@ layout: post
 title:  在CentOS 7上用Firewalld配置OpenVPN
 date:   2017-12-21 10:44:11 +0800
 categories: linux
-tags: linux
+tags: [linux, openvpn, centos]
 ---
 
 网上有很多配置OpenVPN的教程，但是大多数都是用的iptables。CentOS 7上默认使用Firewalld而不是iptables，这里我们尝试用Firewalld来配置。
