@@ -111,3 +111,5 @@ git subtree pull --prefix=dist S_GIT_REMOTE_PATH master
 当然在P2项目中重复上述步骤添加subtree，之后就可以愉快的使用git subtree来使用公共模块了。
 在本例中我们是分离一个现有的目录当作subtree，如果是新建一个目录来来当作subtree就会稍微简单一点。修改一下步骤2就可以了。
 
+需要注意的是，并不是任意的git仓库都可以添加为subtree的，因为subtree的commit会被合并到当前项目历史记录中，所以如果两个仓库的历史记录无关的话是无法合并的。所以正确的姿势就应该是从当前项目中split出一个子项目来当作subtree。
+
