@@ -107,7 +107,7 @@
                 </span>
 
                 {% assign cat_length = post.categories.size %}
-                {% if cat_length > 1 and loop.index != cat_length %}
+                {% if cat_length > 1 and forloop.index != cat_length %}
                   {{ __.symbol.comma }}
                 {% endif %}
               {% endfor %}
@@ -208,6 +208,8 @@
           {% endif %}
 
           {% if site.post_wordcount.wordcount or site.post_wordcount.min2read %}
+            {% assign source = post.content %}
+            {% include _helper/wordcount.html %}
             <div class="post-wordcount">
               {% if site.post_wordcount.wordcount %}
                 {% unless site.post_wordcount.separated_meta %}
@@ -220,7 +222,7 @@
                   <span class="post-meta-item-text">{{ __.post.wordcount }}</span>
                 {% endif %}
                 <span title="{{ __.post.wordcount }}">
-                  {{ post.content | number_of_words }}
+                  {{ wordcount }}
                 </span>
               {% endif %}
 
@@ -236,7 +238,7 @@
                   <span class="post-meta-item-text">{{ __.post.min2read }}</span>
                 {% endif %}
                 <span title="{{ __.post.min2read }}">
-                  {{ post.content | number_of_words | divided_by: 200 }}
+                  {{ wordcount | divided_by: 200 }}
                 </span>
               {% endif %}
             </div>
@@ -288,7 +290,7 @@
           </div>
           <!--/noindex-->
         {% elsif post.excerpt  %}
-          {{ post.excerpt }}
+          {% include _macro/post-excerpt.html %}
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="{{ post.url | relative_url }}{% if site.scroll_to_more %}#{{ __.post.more }}{% endif %}" rel="contents">
@@ -311,11 +313,11 @@
           {% if post.type == 'picture' %}
             <a href="{{ post.url | relative_url }}">{{ post.content }}</a>
           {% else %}
-            {{ post.content }}
+            {% include _macro/post-content.html %}
           {% endif %}
         {% endif %}
       {% else %}
-        {{ post.content }}
+        {% include _macro/post-content.html %}
       {% endif  %}
     </div>
 
