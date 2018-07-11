@@ -6,8 +6,10 @@ categories: swift
 tags: [swift, delegation, closure, retain cycles, generics]
 ---
 
-> 感谢原文作者Oleg Dreyman授权翻译本文
-> 原作者：Oleg Dreyman
+> 感谢原文作者Oleg Dreyman授权翻译本文 
+> 
+> 原作者：Oleg Dreyman 
+> 
 > 原文链接：https://medium.com/anysuggestion/preventing-memory-leaks-with-swift-compile-time-safety-49b845df4dc6
 
 *这篇文章将讨论基于闭包的委托、循环引用和范型*
